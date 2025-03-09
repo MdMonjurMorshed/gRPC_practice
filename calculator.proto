@@ -4,6 +4,7 @@ package calculator;
 
 service Calculator {
   rpc Add (AddRequest) returns (AddResponse);
+  rpc Sub (SubRequest) returns (AddResponse);
 }
 
 message AddRequest {
@@ -13,4 +14,9 @@ message AddRequest {
 
 message AddResponse {
   int32 result = 1;
+}
+
+message SubRequest{
+  int32 num1 = 1;
+  int32 num2 = 2;
 }

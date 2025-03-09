@@ -8,8 +8,11 @@ def run(num1, num2):
         stub = calculator_pb2_grpc.CalculatorStub(channel)
         print('stub====>',stub)
         response = stub.Add(calculator_pb2.AddRequest(num1=num1, num2=num2))
+        sub_res = stub.Sub(calculator_pb2.SubRequest(num1=num1, num2=num2))
+        
         print('response=========>',response)
     print(f"Result: {response.result}")
+    print("sub response result:",sub_res.result)
 
 if __name__ == '__main__':
     # Get user Input 

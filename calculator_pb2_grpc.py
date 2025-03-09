@@ -39,6 +39,11 @@ class CalculatorStub(object):
                 request_serializer=calculator__pb2.AddRequest.SerializeToString,
                 response_deserializer=calculator__pb2.AddResponse.FromString,
                 _registered_method=True)
+        self.Sub = channel.unary_unary(
+                '/calculator.Calculator/Sub',
+                request_serializer=calculator__pb2.SubRequest.SerializeToString,
+                response_deserializer=calculator__pb2.AddResponse.FromString,
+                _registered_method=True)
 
 
 class CalculatorServicer(object):
@@ -50,12 +55,23 @@ class CalculatorServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Sub(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_CalculatorServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Add': grpc.unary_unary_rpc_method_handler(
                     servicer.Add,
                     request_deserializer=calculator__pb2.AddRequest.FromString,
+                    response_serializer=calculator__pb2.AddResponse.SerializeToString,
+            ),
+            'Sub': grpc.unary_unary_rpc_method_handler(
+                    servicer.Sub,
+                    request_deserializer=calculator__pb2.SubRequest.FromString,
                     response_serializer=calculator__pb2.AddResponse.SerializeToString,
             ),
     }
@@ -85,6 +101,33 @@ class Calculator(object):
             target,
             '/calculator.Calculator/Add',
             calculator__pb2.AddRequest.SerializeToString,
+            calculator__pb2.AddResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Sub(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/calculator.Calculator/Sub',
+            calculator__pb2.SubRequest.SerializeToString,
             calculator__pb2.AddResponse.FromString,
             options,
             channel_credentials,
